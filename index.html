@@ -3,593 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Mastery</title>
+    <title>Student Grade Report</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #f5f3ff 0%, #eff6ff 100%);
-            min-height: 100vh;
+            font-family: Arial, sans-serif;
             padding: 20px;
+            background-color: #f5f5f5;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .branding {
-            text-align: center;
-            color: #1f2937;
-            font-size: 2.8rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #1f2937;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #6b7280;
-            margin-bottom: 40px;
-        }
-
-        .levels-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 40px;
-        }
-
-        .level-card {
-            padding: 20px;
-            border-radius: 12px;
-            border: 2px solid #d1d5db;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .level-card:hover:not(.locked) {
-            border-color: #9333ea;
-            transform: translateY(-2px);
-        }
-
-        .level-card.locked {
-            background: #f3f4f6;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-
-        .level-card.current {
-            background: #9333ea;
-            color: white;
-            border-color: #9333ea;
-        }
-
-        .level-card.completed {
-            background: #f0fdf4;
-            border-color: #22c55e;
-        }
-
-        .level-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .level-title {
-            font-size: 0.9rem;
-        }
-
-        .main-content {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .content-header h2 {
-            font-size: 1.8rem;
-            color: #1f2937;
-            margin-bottom: 10px;
-        }
-
-        .content-header p {
-            color: #6b7280;
-            margin-bottom: 10px;
-        }
-
-        .exercise-info {
-            color: #9ca3af;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-
-        .instruction-box {
-            background: #dbeafe;
-            border-left: 4px solid #3b82f6;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-        }
-
-        .instruction-box p {
-            color: #1f2937;
-            font-weight: 500;
-        }
-
-        .code-section label {
-            display: block;
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 10px;
-        }
-
-        #codeEditor {
+        
+        table {
             width: 100%;
-            height: 200px;
+            max-width: 900px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        caption {
+            font-size: 24px;
+            font-weight: bold;
             padding: 15px;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            background: #1f2937;
-            color: #10b981;
-            border: 2px solid #374151;
-            border-radius: 8px;
-            resize: vertical;
+            background-color: #2c3e50;
+            color: white;
+            caption-side: top;
         }
-
-        #codeEditor:focus {
-            outline: none;
-            border-color: #9333ea;
+        
+        th {
+            background-color: #34495e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #2c3e50;
         }
-
-        .feedback {
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            display: none;
+        
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
         }
-
-        .feedback.success {
-            background: #f0fdf4;
-            color: #166534;
-            border: 1px solid #22c55e;
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
-
-        .feedback.error {
-            background: #fef2f2;
-            color: #991b1b;
-            border: 1px solid #ef4444;
+        
+        tr:hover {
+            background-color: #e8f4f8;
         }
-
-        .feedback.show {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        
+        .subject-header {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
         }
-
-        .button-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        button {
-            padding: 10px 24px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.95rem;
-        }
-
-        .btn-check {
-            background: #9333ea;
+        
+        .total-row {
+            background-color: #95a5a6;
+            font-weight: bold;
             color: white;
         }
-
-        .btn-check:hover {
-            background: #7e22ce;
+        
+        .grade-a {
+            color: #27ae60;
+            font-weight: bold;
         }
-
-        .btn-hint {
-            background: #eab308;
-            color: white;
+        
+        .grade-b {
+            color: #2980b9;
+            font-weight: bold;
         }
-
-        .btn-hint:hover {
-            background: #ca8a04;
+        
+        .grade-c {
+            color: #f39c12;
+            font-weight: bold;
         }
-
-        .btn-solution {
-            background: #6b7280;
-            color: white;
+        
+        .center {
+            text-align: center;
         }
-
-        .btn-solution:hover {
-            background: #4b5563;
-        }
-
-        .btn-prev {
-            background: #3b82f6;
-            color: white;
-        }
-
-        .btn-prev:hover {
-            background: #2563eb;
-        }
-
-        .btn-prev:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-        }
-
-        .btn-next {
-            background: #22c55e;
-            color: white;
-        }
-
-        .btn-next:hover {
-            background: #16a34a;
-        }
-
-        .btn-next:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-        }
-
-        .hint-box, .solution-box {
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .hint-box {
-            background: #fef3c7;
-            border-left: 4px solid #eab308;
-        }
-
-        .solution-box {
-            background: #f9fafb;
-            border-left: 4px solid #6b7280;
-        }
-
-        .solution-box pre {
-            background: #1f2937;
-            color: #10b981;
-            padding: 15px;
-            border-radius: 6px;
-            overflow-x: auto;
-            margin-top: 10px;
-            font-size: 13px;
-        }
-
-        .icon {
-            width: 20px;
-            height: 20px;
-            display: inline-block;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            .branding {
-                font-size: 2.2rem;
-            }
-
-            .main-content {
-                padding: 20px;
-            }
+        
+        .right {
+            text-align: right;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="branding">Josh Digital Concept</div>
-        <h1>HTML Mastery</h1>
-        <p class="subtitle">Learn HTML from basic to advanced</p>
-
-        <div class="levels-grid" id="levelsGrid"></div>
-
-        <div class="main-content">
-            <div class="content-header">
-                <h2 id="levelTitle"></h2>
-                <p id="levelDescription"></p>
-                <div class="exercise-info" id="exerciseInfo"></div>
-            </div>
-
-            <div class="instruction-box">
-                <p id="instruction"></p>
-            </div>
-
-            <div class="code-section">
-                <label for="codeEditor">Your Code:</label>
-                <textarea id="codeEditor" spellcheck="false"></textarea>
-            </div>
-
-            <div class="feedback" id="feedback"></div>
-
-            <div class="button-group">
-                <button class="btn-prev" id="btnPrev" onclick="prevExercise()" disabled>← Previous</button>
-                <button class="btn-check" onclick="checkCode()">Check Code</button>
-                <button class="btn-hint" onclick="toggleHint()">Show Hint</button>
-                <button class="btn-solution" onclick="toggleSolution()">Show Solution</button>
-                <button class="btn-next" id="btnNext" onclick="nextExercise()" disabled>Next →</button>
-            </div>
-
-            <div class="hint-box" id="hintBox"></div>
-            <div class="solution-box" id="solutionBox"></div>
-        </div>
-    </div>
-
-    <script>
-        const levels = [
-            {
-                title: "Level 1: HTML Basics",
-                description: "Learn the foundation of HTML structure",
-                exercises: [
-                    {
-                        instruction: "Create a basic HTML structure with DOCTYPE, html, head, and body",
-                        starterCode: "<!-- Write your HTML structure here -->\n",
-                        solution: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>My Page</title>\n</head>\n<body>\n</body>\n</html>",
-                        hint: "Start with <!DOCTYPE html>, then include <html>, <head>, and <body> tags",
-                        test: (code) => code.includes('<!DOCTYPE html>') && code.includes('<html') && code.includes('<head>') && code.includes('<body>')
-                    },
-                    {
-                        instruction: "Add a page title to the head section",
-                        starterCode: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <!-- Add title here -->\n</head>\n<body>\n</body>\n</html>",
-                        solution: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Welcome</title>\n</head>\n<body>\n</body>\n</html>",
-                        hint: "Use <title> inside <head> to set the page title",
-                        test: (code) => code.includes('<title>') && code.includes('</title>')
-                    },
-                    {
-                        instruction: "Add a heading and paragraph to the body",
-                        starterCode: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>My Page</title>\n</head>\n<body>\n    <!-- Add h1 and p here -->\n</body>\n</html>",
-                        solution: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>My Page</title>\n</head>\n<body>\n    <h1>Welcome</h1>\n    <p>This is my first webpage.</p>\n</body>\n</html>",
-                        hint: "Use <h1> for the heading and <p> for the paragraph",
-                        test: (code) => code.includes('<h1>') && code.includes('</h1>') && code.includes('<p>') && code.includes('</p>')
-                    }
-                ]
-            },
-            {
-                title: "Level 2: Elements and Attributes",
-                description: "Master HTML elements and their attributes",
-                exercises: [
-                    {
-                        instruction: "Create a link to an external website with a target attribute",
-                        starterCode: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Links</title>\n</head>\n<body>\n    <!-- Add anchor tag here -->\n</body>\n</html>",
-                        solution: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Links</title>\n</head>\n<body>\n    <a href=\"https://example.com\" target=\"_blank\">Visit Example</a>\n</body>\n</html>",
-                        hint: "Use <a> with href and target=\"_blank\" attributes",
-                        test: (code) => code.includes('<a') && code.includes('href=') && code.includes('target="_blank"')
-                    },
-                    {
-                        instruction: "Add an image with alt attribute",
-                        starterCode: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Images</title>\n</head>\n<body>\n    <!-- Add image tag here -->\n</body>\n</html>",
-                        solution: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Images</title>\n</head>\n<body>\n    <img src=\"image.jpg\" alt=\"Description of image\">\n</body>\n</html>",
-                        hint: "Use <img> with src and alt attributes",
-                        test: (code) => code.includes('<img') && code.includes('src=') && code.includes('alt=')
-                    }
-                ]
-            },
-            {
-                title: "Level 3: Formatting and Styles",
-                description: "Apply formatting and basic CSS",
-                exercises: [
-                    {
-                        instruction: "Style a paragraph with inline CSS (color and font-size)",
-                        starterCode: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Styles</title>\n</head>\n<body>\n    <!-- Style the paragraph -->\n    <p>Hello World</p>\n</body>\n</html>",
-                        solution: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Styles</title>\n</head>\n<body>\n    <p style=\"color: blue; font-size: 16px;\">Hello World</p>\n</body>\n</html>",
-                        hint: "Add style attribute to <p> with color and font-size properties",
-                        test: (code) => code.includes('<p') && code.includes('style=') && code.includes('color:') && code.includes('font-size:')
-                    },
-                    {
-                        instruction: "Use formatting tags (bold and italic)",
-                        starterCode: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Formatting</title>\n</head>\n<body>\n    <!-- Format this text -->\n    <p>Welcome to my page</p>\n</body>\n</html>",
-                        solution: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Formatting</title>\n</head>\n<body>\n    <p><b>Welcome</b> to my <i>page</i></p>\n</body>\n</html>",
-                        hint: "Use <b> for bold and <i> for italic text",
-                        test: (code) => code.includes('<b>') && code.includes('</b>') && code.includes('<i>') && code.includes('</i>')
-                    }
-                ]
-            },
-            {
-                title: "Level 4: Lists and Tables",
-                description: "Create structured content with lists and tables",
-                exercises: [
-                    {
-                        instruction: "Create an ordered list with three items",
-                        starterCode: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Lists</title>\n</head>\n<body>\n    <!-- Add ordered list here -->\n</body>\n</html>",
-                        solution: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Lists</title>\n</head>\n<body>\n    <ol>\n        <li>Item 1</li>\n        <li>Item 2</li>\n        <li>Item 3</li>\n    </ol>\n</body>\n</html>",
-                        hint: "Use <ol> for ordered list and <li> for list items",
-                        test: (code) => code.includes('<ol>') && code.includes('</ol>') && code.includes('<li>') && code.includes('</li>')
-                    },
-                    {
-                        instruction: "Create a simple table with 2 rows and 2 columns",
-                        starterCode: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Tables</title>\n</head>\n<body>\n    <!-- Add table here -->\n</body>\n</html>",
-                        solution: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Tables</title>\n</head>\n<body>\n    <table>\n        <tr>\n            <td>Cell 1</td>\n            <td>Cell 2</td>\n        </tr>\n        <tr>\n            <td>Cell 3</td>\n            <td>Cell 4</td>\n        </tr>\n    </table>\n</body>\n</html>",
-                        hint: "Use <table>, <tr> for rows, and <td> for cells",
-                        test: (code) => code.includes('<table>') && code.includes('<tr>') && code.includes('<td>')
-                    }
-                ]
-            },
-            {
-                title: "Level 5: Advanced HTML",
-                description: "Combine multiple HTML features",
-                exercises: [
-                    {
-                        instruction: "Add a favicon and a blockquote",
-                        starterCode: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Advanced</title>\n    <!-- Add favicon here -->\n</head>\n<body>\n    <!-- Add blockquote here -->\n</body>\n</html>",
-                        solution: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Advanced</title>\n    <link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\">\n</head>\n<body>\n    <blockquote>Success is not final, failure is not fatal.</blockquote>\n</body>\n</html>",
-                        hint: "Use <link> for favicon in <head> and <blockquote> in <body>",
-                        test: (code) => code.includes('<link') && code.includes('rel="icon"') && code.includes('<blockquote>')
-                    },
-                    {
-                        instruction: "Create a styled page with heading, link, and comment",
-                        starterCode: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Styled Page</title>\n</head>\n<body>\n    <!-- Add heading, link, and comment -->\n</body>\n</html>",
-                        solution: "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <title>Styled Page</title>\n</head>\n<body>\n    <!-- Main content -->\n    <h1 style=\"color: green;\">Welcome</h1>\n    <a href=\"https://example.com\">Visit</a>\n</body>\n</html>",
-                        hint: "Include a styled <h1>, an <a> tag, and an HTML comment",
-                        test: (code) => code.includes('<!--') && code.includes('-->') && code.includes('<h1') && code.includes('style=') && code.includes('<a')
-                    }
-                ]
-            }
-        ];
-
-        let currentLevel = 0;
-        let currentExercise = 0;
-        let completedLevels = [];
-        let isCurrentExerciseCorrect = false;
-
-        function init() {
-            renderLevels();
-            loadExercise();
-        }
-
-        function renderLevels() {
-            const grid = document.getElementById('levelsGrid');
-            grid.innerHTML = '';
-            
-            levels.forEach((level, index) => {
-                const isLocked = index > 0 && !completedLevels.includes(index - 1);
-                const isCompleted = completedLevels.includes(index);
-                const isCurrent = index === currentLevel;
-
-                const card = document.createElement('div');
-                card.className = `level-card ${isLocked ? 'locked' : ''} ${isCurrent ? 'current' : ''} ${isCompleted ? 'completed' : ''}`;
-                
-                if (!isLocked) {
-                    card.onclick = () => selectLevel(index);
-                }
-
-                card.innerHTML = `
-                    <div class="level-header">
-                        <span>Level ${index + 1}</span>
-                        ${isLocked ? '🔒' : isCompleted ? '🏆' : ''}
-                    </div>
-                    <div class="level-title">${level.title.replace(`Level ${index + 1}: `, '')}</div>
-                `;
-
-                grid.appendChild(card);
-            });
-        }
-
-        function selectLevel(index) {
-            if (index === 0 || completedLevels.includes(index - 1)) {
-                currentLevel = index;
-                currentExercise = 0;
-                isCurrentExerciseCorrect = false;
-                loadExercise();
-                renderLevels();
-            }
-        }
-
-        function loadExercise() {
-            const level = levels[currentLevel];
-            const exercise = level.exercises[currentExercise];
-
-            document.getElementById('levelTitle').textContent = level.title;
-            document.getElementById('levelDescription').textContent = level.description;
-            document.getElementById('exerciseInfo').textContent = `Exercise ${currentExercise + 1} of ${level.exercises.length}`;
-            document.getElementById('instruction').textContent = exercise.instruction;
-            document.getElementById('codeEditor').value = exercise.starterCode;
-            
-            document.getElementById('hintBox').innerHTML = `<strong>Hint:</strong> ${exercise.hint}`;
-            document.getElementById('solutionBox').innerHTML = `<strong>Solution:</strong><pre>${exercise.solution}</pre>`;
-
-            document.getElementById('feedback').classList.remove('show');
-            document.getElementById('hintBox').style.display = 'none';
-            document.getElementById('solutionBox').style.display = 'none';
-            document.getElementById('btnNext').disabled = !isCurrentExerciseCorrect;
-            document.getElementById('btnPrev').disabled = currentLevel === 0 && currentExercise === 0;
-        }
-
-        function checkCode() {
-            const code = document.getElementById('codeEditor').value;
-            const exercise = levels[currentLevel].exercises[currentExercise];
-            const feedback = document.getElementById('feedback');
-
-            if (exercise.test(code)) {
-                feedback.className = 'feedback success show';
-                feedback.innerHTML = '✓ Correct! Great job!';
-                isCurrentExerciseCorrect = true;
-                document.getElementById('btnNext').disabled = false;
-            } else {
-                feedback.className = 'feedback error show';
-                feedback.innerHTML = '✗ Not quite right. Try again or use a hint!';
-                isCurrentExerciseCorrect = false;
-                document.getElementById('btnNext').disabled = true;
-            }
-        }
-
-        function toggleHint() {
-            const hintBox = document.getElementById('hintBox');
-            hintBox.style.display = hintBox.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function toggleSolution() {
-            const solutionBox = document.getElementById('solutionBox');
-            solutionBox.style.display = solutionBox.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function nextExercise() {
-            if (!isCurrentExerciseCorrect) return;
-
-            const level = levels[currentLevel];
-
-            if (currentExercise < level.exercises.length - 1) {
-                currentExercise++;
-                isCurrentExerciseCorrect = false;
-                loadExercise();
-            } else if (currentLevel < levels.length - 1) {
-                if (!completedLevels.includes(currentLevel)) {
-                    completedLevels.push(currentLevel);
-                }
-                currentLevel++;
-                currentExercise = 0;
-                isCurrentExerciseCorrect = false;
-                loadExercise();
-                renderLevels();
-            } else {
-                if (!completedLevels.includes(currentLevel)) {
-                    completedLevels.push(currentLevel);
-                    renderLevels();
-                }
-                alert('🎉 Congratulations! You\'ve completed all levels!');
-            }
-        }
-
-        function prevExercise() {
-            if (currentExercise > 0) {
-                currentExercise--;
-                isCurrentExerciseCorrect = false;
-                loadExercise();
-            } else if (currentLevel > 0) {
-                currentLevel--;
-                currentExercise = levels[currentLevel].exercises.length - 1;
-                isCurrentExerciseCorrect = false;
-                loadExercise();
-                renderLevels();
-            }
-        }
-
-        init();
-    </script>
+    <table>
+        <caption>Semester Grade Report - Fall 2024</caption>
+        
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Student Name</th>
+                <th>Mathematics</th>
+                <th>Science</th>
+                <th>English</th>
+                <th>History</th>
+                <th class="center">Average</th>
+                <th class="center">Grade</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr>
+                <td>S001</td>
+                <td>Alice Johnson</td>
+                <td class="center">92</td>
+                <td class="center">88</td>
+                <td class="center">95</td>
+                <td class="center">90</td>
+                <td class="center">91.25</td>
+                <td class="center grade-a">A</td>
+            </tr>
+            <tr>
+                <td>S002</td>
+                <td>Bob Smith</td>
+                <td class="center">85</td>
+                <td class="center">82</td>
+                <td class="center">88</td>
+                <td class="center">84</td>
+                <td class="center">84.75</td>
+                <td class="center grade-b">B</td>
+            </tr>
+            <tr>
+                <td>S003</td>
+                <td>Carol Martinez</td>
+                <td class="center">78</td>
+                <td class="center">91</td>
+                <td class="center">86</td>
+                <td class="center">89</td>
+                <td class="center">86.00</td>
+                <td class="center grade-b">B</td>
+            </tr>
+            <tr>
+                <td>S004</td>
+                <td>David Lee</td>
+                <td class="center">95</td>
+                <td class="center">93</td>
+                <td class="center">97</td>
+                <td class="center">94</td>
+                <td class="center">94.75</td>
+                <td class="center grade-a">A</td>
+            </tr>
+            <tr>
+                <td>S005</td>
+                <td>Emma Wilson</td>
+                <td class="center">88</td>
+                <td class="center">85</td>
+                <td class="center">90</td>
+                <td class="center">87</td>
+                <td class="center">87.50</td>
+                <td class="center grade-b">B</td>
+            </tr>
+            <tr>
+                <td>S006</td>
+                <td>Frank Brown</td>
+                <td class="center">76</td>
+                <td class="center">79</td>
+                <td class="center">75</td>
+                <td class="center">80</td>
+                <td class="center">77.50</td>
+                <td class="center grade-c">C</td>
+            </tr>
+        </tbody>
+        
+        <tfoot>
+            <tr class="total-row">
+                <td colspan="2" class="right">Class Average:</td>
+                <td class="center">85.67</td>
+                <td class="center">86.33</td>
+                <td class="center">88.50</td>
+                <td class="center">87.33</td>
+                <td class="center">86.96</td>
+                <td class="center">B</td>
+            </tr>
+        </tfoot>
+    </table>
 </body>
-
 </html>
